@@ -17,12 +17,21 @@ set(CMAKE_MACOSX_RPATH 1)
 
 find_package(Threads REQUIRED)
 
+set(CMAKE_BUILD_TYPE Release)
+set(PYTHON_ROOT "C:/Python36")
+set(BOOST_ROOT "C:/boost_1_64_0")
+
+set(PY3 ON)
+set(PYTHON_EXECUTABLE "${PYTHON_ROOT}/python.exe")
+set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 find_package(Boost REQUIRED COMPONENTS program_options)
 include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LINK_DIRS})
+link_directories("${PYTHON_ROOT}/libs")
 
 if(PY3)
-    set(Python_ADDITIONAL_VERSIONS 3.5 3.4 3.3)
+    set(Python_ADDITIONAL_VERSIONS 3.6 3.5 3.4 3.3)
     find_package(PythonInterp 3 REQUIRED)
 else()
     set(Python_ADDITIONAL_VERSIONS 2.7 2.6)
