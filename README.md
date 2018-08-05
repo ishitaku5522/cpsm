@@ -1,3 +1,23 @@
+I modified a bit from https://github.com/nixprime/cpsm to build on windows
+
+## How to build on windows
+
+1. Run following commands
+    ```bat
+    cd /path/to/cpsm/
+    mkdir build
+    cd build
+    cmake .. -G"Visual Studio 15 2017 Win64" -DBOOST_ROOT=/path/to/boost -DPYTHON_ROOT=/path/to/python3dir
+    # for example "... -DBOOST_ROOT=C:/boost_1_64_0 -DPYTHON_ROOT=C:/Python36 ..."
+    cmake .. -G"Visual Studio 15 2017 Win64" -DBOOST_ROOT=/path/to/boost -DPYTHON_ROOT=/path/to/python3dir
+    # I couldn't find the reason but this command is needed twice to find python flag correctly
+    msbuild cpsm.sln /t:build /p:Configuration=Release;Platform="x64"
+    ```
+1. Binaries will be built in build/Release/
+1. Then, rename cpsm_py.dll to cpsm_py.pyd  
+1. Finally, copy cpsm_cli.exe and cpsm_py.pyd into autoload/
+1. (Optional: If you use denite.nvim) Make bin/ directory then copy cpsm_cli.exe and cpsm_py.pyd into bin/
+
 cpsm
 ====
 
