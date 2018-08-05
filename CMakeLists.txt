@@ -18,8 +18,6 @@ set(CMAKE_MACOSX_RPATH 1)
 find_package(Threads REQUIRED)
 
 set(CMAKE_BUILD_TYPE Release)
-set(PYTHON_ROOT "D:/Python36")
-set(BOOST_ROOT "D:/boost_1_65_1")
 
 set(PY3 ON)
 set(PYTHON_EXECUTABLE "${PYTHON_ROOT}/python.exe")
