@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 project(cpsm)
 option(PY3 "Build for python3 instead of python2." OFF)
@@ -6,7 +6,7 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 set(CMAKE_BUILD_TYPE Release)
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU|Clang|Intel")
-  list(APPEND CMAKE_CXX_FLAGS "-std=c++11 -Wall")
+  add_compile_options(-std=c++0x)
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   # Versions of MSVC that support C++11 at all support it by default, so hope
   # for the best...
@@ -29,7 +29,7 @@ link_directories("${BOOST_ROOT}/stage/lib")
 link_directories("${PYTHON_ROOT}/libs")
 
 if(PY3)
-    set(Python_ADDITIONAL_VERSIONS 3.6 3.5 3.4 3.3)
+    set(Python_ADDITIONAL_VERSIONS 3.7 3.6 3.5 3.4 3.3)
     find_package(PythonInterp 3 REQUIRED)
 else()
     set(Python_ADDITIONAL_VERSIONS 2.7 2.6)
