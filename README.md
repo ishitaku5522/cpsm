@@ -7,21 +7,36 @@ I modified a bit from https://github.com/nixprime/cpsm to build on windows
 - Visual Studio
 
 ### Procedure
-1. Run following commands in "Developers Command Prompt"
-    ```bat
-    cd /path/to/cpsm/
-    mkdir build
-    cd build
-    cmake .. -G"Visual Studio 15 2017 Win64" -DBOOST_ROOT=/path/to/boost -DPYTHON_ROOT=/path/to/python3dir
-    REM for example "... -DBOOST_ROOT=C:/boost_1_64_0 -DPYTHON_ROOT=C:/Python36 ..."
-    cmake .. -G"Visual Studio 15 2017 Win64" -DBOOST_ROOT=/path/to/boost -DPYTHON_ROOT=/path/to/python3dir
-    REM I couldn't find the reason but this command is needed twice to find python flag correctly
-    msbuild cpsm.sln /t:build /p:Configuration=Release;Platform="x64"
-    ```
-2. Binaries will be built in build/Release/
-3. Then, rename cpsm_py.dll to cpsm_py.pyd  
-4. Finally, copy cpsm_cli.exe and cpsm_py.pyd into autoload/
-5. (Optional: If you use denite.nvim) Make bin/ directory then copy cpsm_cli.exe and cpsm_py.pyd into bin/
+Run following commands in "Developers Command Prompt"
+
+```bat
+REM Optional (If you run from normal Command Prompt)
+"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+
+cd /path/to/cpsm/
+mkdir build
+cd build
+
+cmake .. -G"Visual Studio 15 2017 Win64" -DBOOST_ROOT=/path/to/boost -DPYTHON_ROOT=/path/to/python3dir
+REM for example "... -DBOOST_ROOT=C:/boost_1_64_0 -DPYTHON_ROOT=C:/Python36 ..."
+
+cmake .. -G"Visual Studio 15 2017 Win64" -DBOOST_ROOT=/path/to/boost -DPYTHON_ROOT=/path/to/python3dir
+REM I couldn't find the reason but this command is needed twice to find python flag correctly
+
+msbuild cpsm.sln /t:build /p:Configuration=Release;Platform="x64"
+
+REM Binaries will be built in build/Release/
+REM Rename cpsm_py.dll to cpsm_py.pyd 
+move Release\cpsm_py.dll Release\cpsm_py.pyd
+
+REM copy cpsm_cli.exe and cpsm_py.pyd into autoload/
+copy Release\cpsm_cli.exe ..\autoload\
+copy Release\cpsm_py.pyd ..\autoload\
+
+REM (Optional: If you use denite.nvim) Make copies of cpsm_cli.exe and cpsm_py.pyd in bin/ directory
+cd ..
+mklink /J bin autoload
+```
 
 cpsm
 ====
